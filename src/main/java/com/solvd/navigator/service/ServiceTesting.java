@@ -2,10 +2,7 @@ package com.solvd.navigator.service;
 
 import com.solvd.navigator.App;
 import com.solvd.navigator.connection.ConnectionPool;
-import com.solvd.navigator.model.Driver;
-import com.solvd.navigator.model.Location;
-import com.solvd.navigator.model.Route;
-import com.solvd.navigator.model.Transportation;
+import com.solvd.navigator.model.*;
 import com.solvd.navigator.service.imple.DriverService;
 import com.solvd.navigator.service.imple.LocationService;
 import com.solvd.navigator.service.imple.RouteService;
@@ -132,15 +129,15 @@ public class ServiceTesting {
 
     public static void routeCRUD(){
         //IDriverDAO driverDAO = new DriverDAO();
-        Driver driver = createDriver("John");
+        Driver driver = createDriver("Jack");
 
         //ITransportationDAO transportationDAO = new TransportationDAO();
         Transportation transportation = createTransportation("Bus", driver);
         Transportation transportation2 = createTransportation("Train", driver);
 
         //ILocationDAO locationDAO = new LocationDAO();
-        Location locationA = createLocation("New York");
-        Location locationB = createLocation("Los Angeles");
+        Location locationA = createLocation("Ontario");
+        Location locationB = createLocation("Palo Alto");
 
         //IRouteDAO routeDAO = new RouteDAO();
         Route route = createRoute(locationA, locationB, transportation, 10, 100, 1000);
@@ -204,7 +201,7 @@ public class ServiceTesting {
 
     private static Route createRoute(Location locationA, Location locationB, Transportation transportation, int duration, int distance, int cost){
         long id = Math.abs(random.nextLong());
-        Route route = new Route();
+        Route route = new RouteBuilder().createRoute();
         route.setId(id);
         route.setLocationA(locationA);
         route.setLocationB(locationB);

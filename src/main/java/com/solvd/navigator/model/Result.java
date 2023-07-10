@@ -1,12 +1,15 @@
 package com.solvd.navigator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
 
     private List<Route> routeList;
 
-    public Result(){};
+    public Result(){
+        this.routeList = new ArrayList<>();
+    };
 
     public List<Route> getRouteList() {
         return routeList;
@@ -20,5 +23,10 @@ public class Result {
         return 0;
     }
 
-
+    @Override
+    public String toString() {
+        return "Result{" +
+                "routeList=" + routeList +
+                '}';
+    }
 }

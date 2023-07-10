@@ -10,10 +10,20 @@ public class Route {
     private Integer distance;
 
     public Route() {
-        this.locationA = new Location();
-        this.locationB = new Location();
+
+
         this.transportation = new Transportation();
 
+    }
+
+    public Route(Long id, Location locationA, Location locationB, Transportation transportation, Integer duration, Integer cost, Integer distance) {
+        this.id = id;
+        this.locationA = locationA;
+        this.locationB = locationB;
+        this.transportation = transportation;
+        this.duration = duration;
+        this.cost = cost;
+        this.distance = distance;
     }
 
     public Long getId() {

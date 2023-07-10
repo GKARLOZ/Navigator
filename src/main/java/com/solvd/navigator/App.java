@@ -6,21 +6,18 @@ import com.solvd.navigator.dao.impl.mybatis.DriverDAO;
 import com.solvd.navigator.dao.impl.mybatis.LocationDAO;
 import com.solvd.navigator.dao.impl.mybatis.TransportationDAO;
 import com.solvd.navigator.dao.impl.mybatis.RouteDAO;
-import com.solvd.navigator.factory.AbstractFactory;
-import com.solvd.navigator.factory.FactoryGenerator;
-import com.solvd.navigator.model.Driver;
-import com.solvd.navigator.model.Location;
-import com.solvd.navigator.model.Route;
-import com.solvd.navigator.model.Transportation;
+import com.solvd.navigator.model.*;
+import com.solvd.navigator.algo.*;
 import com.solvd.navigator.service.ILocationService;
 import com.solvd.navigator.service.IRouteService;
-import com.solvd.navigator.service.ServiceTesting;
+import com.solvd.navigator.service.ITransportationService;
 import com.solvd.navigator.service.imple.LocationService;
 import com.solvd.navigator.service.imple.RouteService;
 import com.solvd.navigator.service.imple.TransportationService;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
+
+import java.util.Dictionary;
 import java.util.Random;
 import java.io.IOException;
 import java.sql.Connection;
@@ -32,16 +29,103 @@ public class App {
 
     public static void main(String[] args) {
 
-        ServiceTesting.driverCRUD();
-        ServiceTesting.locationCRUD();
-        ServiceTesting.transportationCRUD();
-        ServiceTesting.routeCRUD();
+
+        //getDirectionsUsingService();
+        getDirections();
+
+        //ServiceTesting.driverCRUD();
+       //ServiceTesting.locationCRUD();
+        //ServiceTesting.transportationCRUD();
+        //ServiceTesting.routeCRUD();
 
         //connectionPoolTest();
         //myBatisDriverTest();
         //myBatisLocationTest();
         //myBatisTransportationTest();
         //myBatisRouteTest();
+    }
+
+    public static void getDirectionsUsingService(){
+
+        Graph graph = new Graph(true, true);
+        ILocationService locationService = new LocationService();
+        ITransportationService transportationService = new TransportationService();
+        IRouteService routeService = new RouteService();
+
+        Location Ontario = graph.addLocation(locationService.getById(4837167663264298753L));
+        //Location NewYork = graph.addLocation(locationService.getById(1709880993726761196L));
+        Location LosAngeles = graph.addLocation(locationService.getById(8604220953550867941L));
+        Location LosVegas = graph.addLocation(locationService.getById(7289402658460834839L));
+
+
+        graph.addRoute(routeService.getById(777L));
+        graph.addRoute(routeService.getById(888L));
+        graph.addRoute(routeService.getById(555L));
+
+        Location startingLocation = LosVegas;
+        Location endingLocation = LosAngeles;
+
+        Dictionary[] result = Dijkstra.findAllShortestPath(graph, startingLocation);
+        Dictionary<String, Integer> duration = result[0];
+        Dictionary<String, Location> previous = result[1];
+        
+
+//        Integer durationToDestination = duration.get("Brooklyn");
+//        System.out.println("Shortest distance from " + startingLocation.getName() +" to "+ endingLocation.getName() +": " + durationToDestination);
+        System.out.print("Path: ");
+
+        Dijkstra.printPathWithTransportation2(previous, endingLocation);
+        Result result1 = Dijkstra.result(previous, endingLocation);
+        System.out.println("\nResult: "+ result1.toString());
+
+
+    }
+    public static void getDirections(){
+
+        Graph graph = new Graph(true, true);
+
+        Location LA = graph.addLocation("Los Angeles");
+        Location LV = graph.addLocation("Los Vegas");
+        Location NY = graph.addLocation("New York");
+        Location SF = graph.addLocation("San Fransisco");
+        Location Bro = graph.addLocation("Brooklyn");
+        Location Ho = graph.addLocation("Hobart");
+        Location Mi = graph.addLocation("Miami");
+        Location Sea = graph.addLocation("Seattle");
+
+        Transportation bus = new Transportation("Bus");
+        Transportation train = new Transportation("Train");
+        Transportation plane = new Transportation("Plane");
+
+        graph.addRoute(LA,LV,3,bus);
+        graph.addRoute(LA,SF,8,train);
+        graph.addRoute(SF,LV,7,train);
+        graph.addRoute(LV,NY,5,plane);
+        graph.addRoute(NY,Bro,3,bus);
+        graph.addRoute(Bro,Ho,8,train);
+        graph.addRoute(Ho,Mi,7,train);
+        graph.addRoute(Mi,Sea,5,plane);
+
+        graph.addRoute(LA,Bro,44,train);
+        graph.addRoute(LA,Mi,7,train);
+        graph.addRoute(Mi,Bro,5,plane);
+
+
+        Location startingLocation = LA;
+        Location endingLocation = Bro;
+
+        Dictionary[] result = Dijkstra.findAllShortestPath(graph, startingLocation);
+        Dictionary<String, Integer> duration = result[0];
+        Dictionary<String, Location> previous = result[1];
+
+        Integer durationToDestination = duration.get("Brooklyn");
+        System.out.println("Shortest distance from " + startingLocation.getName() +" to "+ endingLocation.getName() +": " + durationToDestination);
+        System.out.print("Path: ");
+
+        Dijkstra.printPathWithTransportation(previous, endingLocation);
+        Result result1 = Dijkstra.result(previous, endingLocation);
+        System.out.println("\nResult: "+ result1.toString());
+
     }
 
     private static void connectionPoolTest(){
@@ -218,7 +302,7 @@ public class App {
 
     private static Route createRoute(Location locationA, Location locationB, Transportation transportation, int duration, int distance, int cost){
         long id = Math.abs(random.nextLong());
-        Route route = new Route();
+        Route route = new RouteBuilder().createRoute();
         route.setId(id);
         route.setLocationA(locationA);
         route.setLocationB(locationB);

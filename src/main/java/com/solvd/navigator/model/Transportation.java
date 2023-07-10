@@ -6,8 +6,11 @@ public class Transportation {
 	private Driver driver;
 
 	public Transportation() {
-
 		this.driver = new Driver();
+	}
+	public Transportation(String name){
+		this.driver = new Driver();
+		this.name = name;
 	}
 
 	public Long getId() {

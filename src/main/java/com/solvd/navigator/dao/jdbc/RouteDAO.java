@@ -1,9 +1,9 @@
 package com.solvd.navigator.dao.jdbc;
 
 import com.solvd.navigator.connection.ConnectionPool;
-import com.solvd.navigator.dao.IDAO;
 import com.solvd.navigator.dao.IRouteDAO;
 import com.solvd.navigator.model.Route;
+import com.solvd.navigator.model.RouteBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -228,7 +228,7 @@ public class RouteDAO implements IRouteDAO {
     private Route fillRouteByResultSet(ResultSet resultSet) {
         Route route= null;
         try {
-            route= new Route();
+            route = new Route();
             route.setId(resultSet.getLong("id"));
             route.setDuration(resultSet.getInt(4));
             route.setCost(resultSet.getInt(6));
