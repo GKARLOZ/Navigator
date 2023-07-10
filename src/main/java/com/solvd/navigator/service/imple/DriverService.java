@@ -2,7 +2,9 @@ package com.solvd.navigator.service.imple;
 
 import com.solvd.navigator.dao.IDriverDAO;
 import com.solvd.navigator.factory.AbstractFactory;
+import com.solvd.navigator.factory.DaoType;
 import com.solvd.navigator.factory.FactoryGenerator;
+import com.solvd.navigator.factory.FactoryType;
 import com.solvd.navigator.model.Driver;
 import com.solvd.navigator.service.IDriverService;
 
@@ -10,8 +12,8 @@ import java.util.List;
 
 public class DriverService implements IDriverService {
 
-    private AbstractFactory daoFactory = FactoryGenerator.getFactory("JDBC");
-    private IDriverDAO iDriverDAO = daoFactory.getDao("Driver");
+    private AbstractFactory daoFactory = FactoryGenerator.getFactory(FactoryType.JDBC);
+    private IDriverDAO iDriverDAO = daoFactory.getDao(DaoType.DRIVER);
 
     @Override
     public Driver getById(long id) {

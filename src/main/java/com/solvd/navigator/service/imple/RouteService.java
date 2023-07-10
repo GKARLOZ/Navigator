@@ -2,7 +2,9 @@ package com.solvd.navigator.service.imple;
 
 import com.solvd.navigator.dao.*;
 import com.solvd.navigator.factory.AbstractFactory;
+import com.solvd.navigator.factory.DaoType;
 import com.solvd.navigator.factory.FactoryGenerator;
+import com.solvd.navigator.factory.FactoryType;
 import com.solvd.navigator.model.Route;
 import com.solvd.navigator.model.Transportation;
 import com.solvd.navigator.service.IRouteService;
@@ -11,11 +13,11 @@ import java.util.List;
 
 public class RouteService implements IRouteService {
 
-    private AbstractFactory daoFactory = FactoryGenerator.getFactory("JDBC");
-    private ITransportationDAO transportationDAO = daoFactory.getDao("Transportation");
-    private IRouteDAO routedao = daoFactory.getDao("Route");
-    private ILocationDAO locationDAO = daoFactory.getDao("Location");
-    private IDriverDAO driverDAO = daoFactory.getDao("Driver");
+    private AbstractFactory daoFactory = FactoryGenerator.getFactory(FactoryType.JDBC);
+    private ITransportationDAO transportationDAO = daoFactory.getDao(DaoType.TRANSPORTATION);
+    private IRouteDAO routedao = daoFactory.getDao(DaoType.ROUTE);
+    private ILocationDAO locationDAO = daoFactory.getDao(DaoType.LOCATION);
+    private IDriverDAO driverDAO = daoFactory.getDao(DaoType.DRIVER);
 
     @Override
     public Route getById(long id) {

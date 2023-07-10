@@ -1,12 +1,15 @@
 package com.solvd.navigator.factory;
 
 public class FactoryGenerator {
-    public static AbstractFactory getFactory(String choice) {
-        if(choice.equalsIgnoreCase("MyBatis")) {
-            return new MyBatisFactory();
-        } else if (choice.equalsIgnoreCase("JDBC")) {
-            return new JDBCFactory();
+    public static AbstractFactory getFactory(FactoryType choice) {
+        
+        switch (choice) {
+            case MYBATIS:
+                return new MyBatisFactory();
+            case JDBC:
+                return new JDBCFactory();
+            default:
+                return null;
         }
-        return null;
     }
 }
