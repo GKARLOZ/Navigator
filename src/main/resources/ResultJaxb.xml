@@ -2,25 +2,25 @@
 <Result>
     <Route>
         <Location>
-            <name>Charleston</name>
+            <name>Sacramento</name>
         </Location>
         <Location>
-            <name>Washington DC</name>
+            <name>Salt Lake City</name>
         </Location>
-        <duration>1</duration>
+        <duration>7</duration>
         <Transportation>
             <vehicleNumber>101</vehicleNumber>
             <TransportationType>
-                <type>Plane</type>
+                <type>Bus</type>
             </TransportationType>
         </Transportation>
     </Route>
     <Route>
         <Location>
-            <name>Washington DC</name>
+            <name>Salt Lake City</name>
         </Location>
         <Location>
-            <name>Salt Lake City</name>
+            <name>Washington DC</name>
         </Location>
         <duration>9</duration>
         <Transportation>
@@ -32,16 +32,16 @@
     </Route>
     <Route>
         <Location>
-            <name>Salt Lake City</name>
+            <name>Washington DC</name>
         </Location>
         <Location>
-            <name>Sacramento</name>
+            <name>Charleston</name>
         </Location>
-        <duration>7</duration>
+        <duration>1</duration>
         <Transportation>
             <vehicleNumber>101</vehicleNumber>
             <TransportationType>
-                <type>Bus</type>
+                <type>Plane</type>
             </TransportationType>
         </Transportation>
     </Route>
